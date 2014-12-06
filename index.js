@@ -14,13 +14,24 @@ world.onbuy = function(item) {
 }
 
 // SPAWN SNOWFLAKES AROUND PLAYER
-tic.interval(function spawnSnowflake() {
-  world.spawnEntityRandom('snowflake', player.position, [100,100])
-}, 5000)
-for (var i = 0; i < 10; i++) {
-  var sf = world.spawnEntityRandom('snowflake', player.position, [100,100])
-  sf.lifespan = rand(10000, 60000)
+var snowflakeWalkCount = 0
+function spawnSnowflake(min, max, amount) {
+  min = min || 10000
+  max = max || 20000
+  amount = amount || 1
+  if (amount === 1) {
+    amount = (Math.random() > .50) ? rand(2, 3)
+      : (Math.random() > .75) ? rand(2, 6)
+      : (Math.random() > .95) ? rand(5, 10)
+      : 1
+  }
+  for (var i = 0; i < amount; i++) {
+    var sf = world.spawnEntityRandom('snowflake', player.position, [100,100])
+    sf.lifespan = rand(min, max)
+  }
 }
+tic.interval(spawnSnowflake, 5000)
+spawnSnowflake(10000, 60000, 8)
 
 // UPDATE MENU BARS
 tic.interval(function updateMenu() {
