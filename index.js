@@ -23,19 +23,27 @@ player.ondead = function() {
 // CREATE STORE
 var store = world.spawnEntityRandom('store', [0,0], [50,50])
 world.onbuy = function(item) {
-  store.buy(player, item)
+  var bought = store.buy(player, item)
+  if (bought && item.id === 'snomachine') {
+    var machine = world.spawnEntityRandom('snomachine', player.position, [200,200])
+    machine.onemit = function() {
+      spawnSnowflake(30 * 1000, 180 * 10000, rand(10, 15), machine.position, [50,50])
+    }
+  }
 }
 
 // SAVE / RESTORE GAME
 restoreGame(player, world)
 tic.interval(function() { saveGame(player) }, 2000)
 
-// SPAWN SNOWFLAKES AROUND PLAYER
+// SPAWN SNOWFLAKES AROUND POS
 var snowflakeWalkCount = 0
-function spawnSnowflake(min, max, amount) {
+function spawnSnowflake(min, max, amount, pos, dist) {
   min = min || 10000
   max = max || 20000
   amount = amount || 1
+  pos = pos || player.position
+  dist = dist || [100,100]
   if (amount === 1) {
     amount = (Math.random() > .50) ? rand(2, 3)
       : (Math.random() > .75) ? rand(2, 6)
@@ -43,7 +51,7 @@ function spawnSnowflake(min, max, amount) {
       : 1
   }
   for (var i = 0; i < amount; i++) {
-    var sf = world.spawnEntityRandom('snowflake', player.position, [100,100])
+    var sf = world.spawnEntityRandom('snowflake', pos, dist)
     sf.lifespan = rand(min, max)
   }
 }
