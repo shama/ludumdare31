@@ -3,6 +3,8 @@ var vkey = require('vkey')
 var tic = require('./lib/common').tic
 var rand = require('./lib/common').rand
 var world = require('./lib/world')()
+var saveGame = require('./lib/save').save
+var restoreGame = require('./lib/save').restore
 
 // CREATE PLAYER
 var player = world.spawnEntity('player', [0,0])
@@ -12,6 +14,10 @@ var store = world.spawnEntityRandom('store', [0,0], [50,50])
 world.onbuy = function(item) {
   store.buy(player, item)
 }
+
+// SAVE / RESTORE GAME
+restoreGame(player, world)
+tic.interval(function() { saveGame(player) }, 2000)
 
 // SPAWN SNOWFLAKES AROUND PLAYER
 var snowflakeWalkCount = 0
