@@ -1,17 +1,25 @@
 var raf = require('raf')
 var vkey = require('vkey')
+var tic = require('./lib/common').tic
 var world = require('./lib/world')()
 
 // CREATE PLAYER
-var player = require('./lib/player')()
-player.position = [20,10]
-world.entities.push(player)
+var player = world.spawnEntity('player', [0,0])
 
-// ANIMATION TICK
-raf(function tick() {
-  world.render()
-  raf(tick)
-})
+// SPAWN SNOWFLAKES AROUND PLAYER
+tic.interval(function spawnSnowflake() {
+  world.spawnEntityRandom('snowflake', player.position, [50,50])
+}, 5000)
+world.spawnEntityRandom('snowflake', player.position, [50,50])
+world.spawnEntityRandom('snowflake', player.position, [50,50])
+world.spawnEntityRandom('snowflake', player.position, [50,50])
+world.spawnEntityRandom('snowflake', player.position, [50,50])
+
+// UPDATE MENU BAR
+tic.interval(function updateMenu() {
+  document.getElementById('menu-hp').innerHTML = 'HP: ' + player.hp
+  document.getElementById('menu-snowflakes').innerHTML = 'SNOWFLAKES: ' + player.inv.snowflakes
+}, 500)
 
 // KEYBOARD CONTROLS
 window.onkeydown = function keyDown(e) {
@@ -19,16 +27,25 @@ window.onkeydown = function keyDown(e) {
   var speed = 10
   switch (key) {
     case '<left>':
-      player.position[0] -= speed
+      player.move([-speed, 0])
       break
     case '<right>':
-      player.position[0] += speed
+      player.move([speed, 0])
       break
     case '<up>':
-      player.position[1] -= speed
+      player.move([0, -speed])
       break
     case '<down>':
-      player.position[1] += speed
+      player.move([0, speed])
       break
   }
 }
+
+// ANIMATION TICK
+var lastdt = 0
+raf(function tick(dt) {
+  tic.tick(dt - lastdt)
+  world.tick()
+  lastdt = dt
+  raf(tick)
+})
