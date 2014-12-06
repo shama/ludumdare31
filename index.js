@@ -6,8 +6,19 @@ var world = require('./lib/world')()
 var saveGame = require('./lib/save').save
 var restoreGame = require('./lib/save').restore
 
+var gameOver = false
+
 // CREATE PLAYER
 var player = world.spawnEntity('player', [0,0])
+player.ondead = function() {
+  document.body.style.backgroundColor = 'red'
+  document.getElementById('fight').style.display = 'none'
+  tic.timeout(function() {
+    gameOver = true
+    player.reset()
+    saveGame(player)
+  }, 100)
+}
 
 // CREATE STORE
 var store = world.spawnEntityRandom('store', [0,0], [50,50])
@@ -38,6 +49,11 @@ function spawnSnowflake(min, max, amount) {
 }
 tic.interval(spawnSnowflake, 5000)
 spawnSnowflake(10000, 60000, 8)
+
+// RANDOM ENEMY ENCOUNTERS
+player.onmove = function(pos) {
+  world.randomEnemy(pos, player)
+}
 
 // UPDATE MENU BARS
 tic.interval(function updateMenu() {
@@ -71,6 +87,7 @@ window.onkeydown = function keyDown(e) {
 // ANIMATION TICK
 var lastdt = 0
 raf(function tick(dt) {
+  if (gameOver) return
   tic.tick(dt - lastdt)
   world.tick()
   lastdt = dt
