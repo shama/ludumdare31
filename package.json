@@ -1,0 +1,26 @@
+{
+  "name": "ludumdare31",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "beefy index.js 8080 -- -d"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/shama/ludumdare31"
+  },
+  "author": "Kyle Robinson Young <kyle@dontkry.com> (http://dontkry.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shama/ludumdare31/issues"
+  },
+  "homepage": "https://github.com/shama/ludumdare31",
+  "devDependencies": {
+    "beefy": "^2.1.1",
+    "browserify": "^7.0.0",
+    "raf": "^2.0.4",
+    "vectors": "^0.1.0",
+    "vkey": "^1.0.0"
+  }
+}

@@ -1,0 +1,9 @@
+body {
+  font-size: 16px;
+}
+
+.player {
+  background-color: white;
+  color: black;
+  font-size: 1em;
+}
