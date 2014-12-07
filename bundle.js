@@ -254,7 +254,7 @@ function Fire() {
   Enemy.call(this)
   this.name = 'FIRE'
   this.hp = 20
-  this.str = 15
+  this.str = 6
   this.def = 5
   this.run = .3
   this.snowflakes = 50
@@ -308,8 +308,8 @@ function Sun() {
   Enemy.call(this)
   this.name = '☀SUN☀'
   this.hp = 9999
-  this.str = 100
-  this.def = 1000
+  this.str = 45
+  this.def = 45
   this.run = 1
   this.snowflakes = 9999
 }
@@ -431,17 +431,17 @@ Player.prototype.reset = function() {
 Player.prototype.tick = function(world) {
   Entity.prototype.tick.call(this, world)
   this.whereAmI(world)
-  if (this.inv.snowflakes > 100 && this.maxhp < 20) {
+  if (this.inv.snowflakes >= 100 && this.inv.snowflakes < 200 && this.maxhp < 20) {
     this.maxhp = 20
-  } else if (this.inv.snowflakes > 200 && this.maxhp < 40) {
+  } else if (this.inv.snowflakes >= 200 && this.inv.snowflakes < 900 &&  this.maxhp < 40) {
     this.maxhp = 20
-  } else if (this.inv.snowflakes > 900 && this.maxhp < 80) {
+  } else if (this.inv.snowflakes >= 900 && this.inv.snowflakes < 1200 &&  this.maxhp < 80) {
     this.maxhp = 80
-  } else if (this.inv.snowflakes > 1200 && this.maxhp < 100) {
+  } else if (this.inv.snowflakes >= 1200 && this.inv.snowflakes < 2000 &&  this.maxhp < 100) {
     this.maxhp = 100
-  } else if (this.inv.snowflakes > 2000 && this.maxhp < 200) {
+  } else if (this.inv.snowflakes >= 2000 && this.inv.snowflakes < 10000 &&  this.maxhp < 200) {
     this.maxhp = 200
-  } else if (this.inv.snowflakes > 10000 && this.maxhp < 1000) {
+  } else if (this.inv.snowflakes >= 10000 && this.maxhp < 1000) {
     this.maxhp = 1000
   }
 }
@@ -756,7 +756,7 @@ World.prototype.addItemsToStore = function() {
   var self = this
   
   self.items.coldfist = new Item({ str: 1, name: 'COLDFIST', id: 'coldfist', cost: 0 })
-  self.items.icicle = new Item({ str: 5, name: 'ICICLE', id: 'icicle', cost: 100 })
+  self.items.icicle = new Item({ str: 6, name: 'ICICLE', id: 'icicle', cost: 100 })
   self.items.icyknife = new Item({ str: 20, name: 'ICY KNIFE', id: 'icyknife', cost: 500 })
   self.items.frostsword = new Item({ str: 50, name: 'FROST SWORD', id: 'frostsword', cost: 1000 })
 
