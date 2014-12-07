@@ -57,6 +57,9 @@ a:hover {
   font-weight: bold;
   cursor: pointer;
 }
+#fight li::first-letter {
+  font-weight: bold;
+}
 
 
 .entity.player {
