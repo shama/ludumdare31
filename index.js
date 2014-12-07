@@ -20,14 +20,17 @@ player.ondead = function() {
   }, 100)
 }
 
+// for cheat testing ;)
+//window.player = player
+
 // CREATE STORE
 var store = world.spawnEntityRandom('store', [0,0], [50,50])
 world.onbuy = function(item) {
   var bought = store.buy(player, item)
   if (bought && item.id === 'snomachine') {
-    var machine = world.spawnEntityRandom('snomachine', player.position, [200,200])
+    var machine = world.spawnEntityRandom('snomachine', player.position, [75,75])
     machine.onemit = function() {
-      spawnSnowflake(30 * 1000, 180 * 10000, rand(10, 15), machine.position, [50,50])
+      spawnSnowflake(30 * 1000, 180 * 10000, rand(10, 30), machine.position, [50,50])
     }
   }
 }
@@ -45,9 +48,9 @@ function spawnSnowflake(min, max, amount, pos, dist) {
   pos = pos || player.position
   dist = dist || [100,100]
   if (amount === 1) {
-    amount = (Math.random() > .50) ? rand(2, 3)
-      : (Math.random() > .75) ? rand(2, 6)
-      : (Math.random() > .95) ? rand(5, 10)
+    amount = (Math.random() > .50) ? rand(2, 5)
+      : (Math.random() > .75) ? rand(3, 8)
+      : (Math.random() > .95) ? rand(5, 20)
       : 1
   }
   for (var i = 0; i < amount; i++) {
