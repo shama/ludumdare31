@@ -41,7 +41,11 @@ a:hover {
   bottom: 3em;
   width: 100%;
   height: 2em;
+  
   background-color: rgba(150, 150, 150, .75);
+}
+#store li {
+  font-size: .8em;
 }
 
 #fight {
